@@ -9,7 +9,7 @@ import PhotoList from './components/PhotoList.jsx';
 
 function App() {
   const [photos, setPhotos] = useState([]);
-  const [query, setQuery] = useState("Dog");
+  const [query, setQuery] = useState("");
 
   /**
    * Handle the fetch requests
@@ -21,13 +21,18 @@ function App() {
 
 
   useEffect(() => {
+    let activeFetch = true;
+
     axios.get(fetchData(query))
       .then(response => {
-        setPhotos(response.data.photos.photo)   
+        if(activeFetch) {
+          setPhotos(response.data.photos.photo)
+        }   
       })
       .catch(error => {
         console.log("Error fetching and parsing data", error);
       })
+      return () => {activeFetch = false}
   }, [query]);
 
   function handleQueryChange(searchText) {

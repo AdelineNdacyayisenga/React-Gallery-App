@@ -8,7 +8,7 @@ function Search({ changeQuery }) {
         e.preventDefault();
         fetchData(e.target.value);
         changeQuery(searchText);
-        //e.currentTarget.reset();
+        e.currentTarget.reset();
     }
     return (
         <form className="search-form" onSubmit={e => handleSubmit(e)}>
