@@ -43,7 +43,7 @@ function App() {
     <>
       <div className="container">
         <Search changeQuery={handleQueryChange} />
-        <Nav />
+        <Nav changeQuery={handleQueryChange}/>
         {console.log(query)}
         <Routes>
           <Route path="/" element={<PhotoList data={photos} pageTitle={`${query} Gifs`} />} />
