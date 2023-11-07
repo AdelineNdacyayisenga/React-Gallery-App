@@ -1,12 +1,14 @@
 import { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Search({ changeQuery }) {
     const [searchText, setSearchText] = useState("");
+    let navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
-        
         changeQuery(searchText);
+        navigate(`search/${searchText}`)
         e.currentTarget.reset();
     }
     return (
