@@ -8,7 +8,7 @@ function Nav ({changeQuery}) {
     return (
         <nav className="main-nav">
         <ul>
-          <li><NavLink to='/cats' onClick={(e) => handleClick(e)}>Cats</NavLink></li>
+          <li><NavLink to='/food' onClick={(e) => handleClick(e)}>Food</NavLink></li>
           <li><NavLink to='/dogs' onClick={(e) => handleClick(e)}>Dogs</NavLink></li>
           <li><NavLink to='/computers' onClick={(e) => handleClick(e)}>Computers</NavLink></li>
         </ul>

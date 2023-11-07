@@ -12,14 +12,6 @@ function Search({ changeQuery }) {
         e.currentTarget.reset();
     }
     
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     console.log(searchText.current.value)
-    //     changeQuery(searchText.current.value);
-    //     navigate(searchText.current.value); //update url to the search term
-    //     e.currentTarget.reset();
-    // }
-    //ref={searchText}
     return (
         <form className="search-form" onSubmit={e => handleSubmit(e)}>
             <input type="search"  onChange={e => setSearchText(e.target.value)} name="search" placeholder="Search" required />
