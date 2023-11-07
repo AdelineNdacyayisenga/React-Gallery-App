@@ -1,6 +1,7 @@
 import { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
+//The search functionality
 function Search({ changeQuery }) {
     const [searchText, setSearchText] = useState("");
     let navigate = useNavigate();

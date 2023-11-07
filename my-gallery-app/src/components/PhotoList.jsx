@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import NoPhotos from "./NoPhotos.jsx";
 
+//display the photo cards
 function PhotoList({ data, pageTitle, changeQuery }) {
   let params = useParams();
   let location = useLocation();

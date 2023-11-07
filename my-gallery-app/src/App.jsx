@@ -6,7 +6,7 @@ import apiKey from "./config.js";
 import Search from "./components/Search.jsx";
 import Nav from "./components/Nav.jsx";
 import PhotoList from "./components/PhotoList.jsx";
-import NoPhotos from "./components/NoPhotos.jsx";
+import PageNotFound from "./components/PageNotFound.jsx";
 
 function App() {
   const [photos, setPhotos] = useState([]);
@@ -38,8 +38,9 @@ function App() {
     return () => {
       activeFetch = false;
     };
-  }, [query]);
+  }, [query]); //fetch new data whenever the query changes
 
+  //handle query change by updating the query state
   function handleQueryChange(searchText) {
     setQuery(searchText);
   }
@@ -51,7 +52,7 @@ function App() {
         <nav className="main-nav">
           <Nav changeQuery={handleQueryChange} />
           {loading
-            ? <p>Loading...</p>
+            ? <p>Loading...</p> //Loading while it's fetching the data
             : (
               <Routes>
                 <Route path="/" element={<Navigate to="/food" />} />
@@ -59,7 +60,8 @@ function App() {
                 <Route path="/dogs" element={<PhotoList data={photos} pageTitle={`${query} Photos`} changeQuery={handleQueryChange} />} />
                 <Route path="/computers" element={<PhotoList data={photos} pageTitle={`${query} Photos`} changeQuery={handleQueryChange} />} />
                 <Route path="/search/:query" element={<PhotoList data={photos} pageTitle={`${query} Photos`} changeQuery={handleQueryChange} />} />
-                <Route path="/*" element={<NoPhotos />} />
+                <Route path="/*" element={<PageNotFound />} />
+                
               </Routes>
             )
           }
