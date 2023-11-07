@@ -11,6 +11,7 @@ import NoPhotos from './components/NoPhotos.jsx';
 function App() {
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("cats");
+  const [loading, setLoading] = useState(true);
 
   /**
    * Handle the fetch requests
@@ -18,13 +19,19 @@ function App() {
    */
 
   function fetchData(query) {
+    setLoading(true);
+    let activeFetch = true;
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
-        setPhotos(response.data.photos.photo)
+        if(activeFetch){
+          setPhotos(response.data.photos.photo)
+          setLoading(false)
+        } 
       })
       .catch(error => {
         console.log("Error fetching and parsing data", error);
-      })
+      });
+      return () => { activeFetch = false }
   }
 
   useEffect(() => {fetchData(query)}, [query])

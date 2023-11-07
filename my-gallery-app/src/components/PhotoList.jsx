@@ -1,41 +1,50 @@
 
 import Photo from './Photo.jsx';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-//import { useState } from 'react';
 import NoPhotos from './NoPhotos.jsx';
 
 function PhotoList({ data, pageTitle, changeQuery }) {
-    //const [query, setQuery] = useState("");
-    
-    const { query } = useParams();
-    let photos = "";
+    let params = useParams();
+    let location = useLocation();
+    let query = pageTitle.split(' ')[0];
+
+    console.log(query);
 
     useEffect(() => {
-        changeQuery(query)
-    })
+        //params are only visible when the browser is on the /search/ route
+        if (location.pathname.includes('/search/')) { 
+            const currentQuery = params.query;
+            if (currentQuery !== query) {
+                changeQuery(currentQuery)
+            } else {
+                changeQuery(query)
+            }
+        }
+    }, [])
 
-    //const currentURL = location.pathname.substring(8); //search/dogs
-    //let params = useParams(); //{query: 'value typed'}
-    //const location = useLocation();
+    useEffect(() => {
+        if(!location.pathname.includes('/search/')) {
+            changeQuery(query)
+        }
+    }, [])
+
+    let photos;
 
     if(data.length > 0) {
         photos = data.map(photo => {
             return <Photo photo={photo} key={photo.id} />
         })
-    } else {
-        photos = <NoPhotos />
     }
     
     return (
         <div className="photo-container">
             <h2>{pageTitle}</h2>
             <ul>
-                {photos}
+                {data.length > 0 ? photos : <NoPhotos />}
             </ul>
         </div>
     ) 
-
 }
 
 export default PhotoList;
