@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import './App.css'
@@ -19,21 +19,32 @@ function App() {
    * `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
    */
 
+  function fetchData(query) {
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+    .then(response => {
+      setPhotos(response.data.photos.photo)
+    })
+    .catch(error => {
+      console.log("Error fetching and parsing data", error);
+    })
+  }
 
-  useEffect(() => {
-    let activeFetch = true;
+  useEffect(() => fetchData(query), [query])
 
-    axios.get(fetchData(query))
-      .then(response => {
-        if(activeFetch) {
-          setPhotos(response.data.photos.photo)
-        }   
-      })
-      .catch(error => {
-        console.log("Error fetching and parsing data", error);
-      })
-      return () => {activeFetch = false}
-  }, [query]);
+  // useEffect(() => {
+  //   let activeFetch = true;
+
+  //   axios.get(fetchData(query))
+  //     .then(response => {
+  //       if (activeFetch) {
+  //         setPhotos(response.data.photos.photo)
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log("Error fetching and parsing data", error);
+  //     })
+  //   return () => { activeFetch = false }
+  // }, [query]);
 
   function handleQueryChange(searchText) {
     setQuery(searchText);
@@ -43,10 +54,11 @@ function App() {
     <>
       <div className="container">
         <Search changeQuery={handleQueryChange} />
-        <Nav changeQuery={handleQueryChange}/>
+        <Nav changeQuery={handleQueryChange} />
         {console.log(query)}
         <Routes>
           <Route path="/" element={<PhotoList data={photos} pageTitle={`${query} Gifs`} />} />
+          <Route path="/" element={<Navigate to="/cats" />} />
           <Route path="cats" element={<PhotoList data={photos} pageTitle={`${query} Gifs`} />} />
           <Route path="dogs" element={<PhotoList data={photos} pageTitle={`${query} Gifs`} />} />
           <Route path="computers" element={<PhotoList data={photos} pageTitle={`${query} Gifs`} />} />
@@ -56,10 +68,6 @@ function App() {
 
     </>
   )
-}
-
-export function fetchData (query) {
-    return `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
 }
 
 export default App

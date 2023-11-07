@@ -1,12 +1,11 @@
 import { useState} from 'react';
-import { fetchData } from '.././App.jsx';
 
 function Search({ changeQuery }) {
     const [searchText, setSearchText] = useState("");
 
     const handleSubmit = e => {
         e.preventDefault();
-        fetchData(e.target.value);
+        
         changeQuery(searchText);
         e.currentTarget.reset();
     }
