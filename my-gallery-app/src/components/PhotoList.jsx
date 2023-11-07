@@ -1,20 +1,19 @@
 
 import Photo from './Photo.jsx';
-//import { useParams } from 'react-router-dom';
-//import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 //import { useState } from 'react';
 import NoPhotos from './NoPhotos.jsx';
 
 function PhotoList({ data, pageTitle, changeQuery }) {
     //const [query, setQuery] = useState("");
     
-    //const { query } = useParams();
-    let photos;
+    const { query } = useParams();
+    let photos = "";
 
-    // useEffect(() => {
-    //     console.log(query)
-    //     changeQuery(query)
-    // })
+    useEffect(() => {
+        changeQuery(query)
+    })
 
     //const currentURL = location.pathname.substring(8); //search/dogs
     //let params = useParams(); //{query: 'value typed'}

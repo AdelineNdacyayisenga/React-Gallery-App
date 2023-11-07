@@ -27,7 +27,7 @@ function App() {
       })
   }
 
-  useEffect(() => fetchData(query), [query])
+  useEffect(() => {fetchData(query)}, [query])
 
   function handleQueryChange(searchText) {
     setQuery(searchText);
@@ -38,7 +38,7 @@ function App() {
       <div className="container">
         <Search changeQuery={handleQueryChange} />
         <nav className="main-nav">
-          <Nav changeQuery={handleQueryChange}/>
+          <Nav changeQuery={handleQueryChange} />
           <Routes>
             <Route path="/" element={<Navigate to="/cats" />} />
             <Route path="/cats" element={<PhotoList data={photos} pageTitle={`${query} Gifs`} changeQuery={handleQueryChange} />} />
